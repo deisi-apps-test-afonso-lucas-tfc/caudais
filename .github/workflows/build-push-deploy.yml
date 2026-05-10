@@ -10,8 +10,9 @@ jobs:
     permissions:
       contents: read
       packages: write
-    uses: deisi-apps-test-afonso-lucas-tfc/platform-ci/.github/workflows/deployment.yml@main
+    uses: deisi-apps-test-afonso-lucas-tfc/platform-ci/.github/workflows/deploy.yml@main
     with:
       targetPort: "3000"
       usePersistence: true
     secrets: inherit
+    
