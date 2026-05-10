@@ -12,8 +12,7 @@ jobs:
       packages: write
     uses: deisi-apps-test-afonso-lucas-tfc/platform-ci/.github/workflows/deploy.yml@main
     with:
-      targetPort: "3000"
+      targetPort: "8000"
       usePersistence: true
     secrets: inherit
 
-    
