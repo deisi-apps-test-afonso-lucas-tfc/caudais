@@ -1,4 +1,4 @@
-FROM rocker/r-base:latest
+FROM docker.io/rocker/r-base:4.4.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
