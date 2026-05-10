@@ -1,20 +1,20 @@
-FROM docker.io/rocker/r-base:4.4.0
+FROM python:3.11-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Instalar dependências do sistema
-RUN apt-get update && apt-get install -y \
-    python3 python3-dev python3-pip python3-venv \
+# Instalar dependências do sistema (incluindo R)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential libffi-dev libssl-dev \
     libxml2-dev libcurl4-openssl-dev \
     libbz2-dev libzstd-dev liblzma-dev \
     libfreetype6-dev libpng-dev libjpeg-dev \
     libopenblas-dev gfortran \
-    git \
-    curl \
-    && apt-get clean
+    git curl \
+    r-base r-base-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Ambiente virtual Python
 ENV VIRTUAL_ENV=/opt/venv
@@ -23,7 +23,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Instalar pacotes Python
 COPY requirements.txt .
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Instalar pacotes R
@@ -36,7 +36,7 @@ COPY . .
 # Preparar ficheiros estáticos para produção
 RUN python manage.py collectstatic --noinput
 
-# Expor porta esperada pelo professor
+# Expor porta esperada
 EXPOSE 3000
 
 # Comando de arranque (produção)
