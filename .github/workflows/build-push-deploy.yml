@@ -5,15 +5,13 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-  packages: write
-
 jobs:
   deploy:
-    uses: deisi-apps-test-afonso-lucas-tfc/platform-ci/.github/workflows/deploy.yml@main
+    permissions:
+      contents: read
+      packages: write
+    uses: deisi-apps-test-afonso-lucas-tfc/platform-ci/.github/workflows/deployment.yml@main
     with:
       targetPort: "3000"
       usePersistence: true
     secrets: inherit
-    
